@@ -1,9 +1,8 @@
 package zendo.games.zenlib.assets;
 
+import com.badlogic.gdx.utils.ObjectMap;
 import zendo.games.zenlib.utils.Point;
 import zendo.games.zenlib.utils.RectI;
-
-import java.util.Map;
 
 /**
  * Data required to create a Sprite from an Aseprite file and packed textures
@@ -16,7 +15,7 @@ public class SpriteInfo {
     public String path;
     public String name;
     public Point slice_pivot;
-    public Map<String, AnimFrameInfo[]> anim_frame_infos;
+    public ObjectMap<String, AnimFrameInfo[]> anim_frame_infos;
 
     public static class AnimFrameInfo {
         public String region_name;

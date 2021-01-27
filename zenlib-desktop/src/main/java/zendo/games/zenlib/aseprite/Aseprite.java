@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.ObjectMap;
 import zendo.games.zenlib.assets.Sprite;
 import zendo.games.zenlib.assets.SpriteInfo;
 import zendo.games.zenlib.utils.Point;
@@ -244,7 +245,7 @@ public class Aseprite {
             info.path = path;
             info.name = path.subSequence(path.lastIndexOf('/') + 1, path.indexOf(".ase")).toString();
             info.slice_pivot = Point.zero();
-            info.anim_frame_infos = new HashMap<>();
+            info.anim_frame_infos = new ObjectMap<>();
 
             // set slice pivot point if a slice with a pivot has been defined
             if (aseprite.slices.size() > 0 && aseprite.slices.get(0).has_pivot) {
@@ -258,7 +259,7 @@ public class Aseprite {
                 int num_frames = anim_tag.to - anim_tag.from + 1;
 
                 // build frame infos for each frame of this animation
-                info.anim_frame_infos.putIfAbsent(anim_tag.name, new SpriteInfo.AnimFrameInfo[num_frames]);
+                info.anim_frame_infos.put(anim_tag.name, new SpriteInfo.AnimFrameInfo[num_frames]);
                 for (int i = 0; i < num_frames; i++) {
                     int frame_index = anim_tag.from + i;
 

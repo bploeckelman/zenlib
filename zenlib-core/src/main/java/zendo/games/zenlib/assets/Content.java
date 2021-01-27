@@ -52,7 +52,7 @@ public abstract class Content {
             sprite.origin.set(info.slice_pivot.x, info.slice_pivot.y);
 
             // build sprite animations
-            for (String anim_name : info.anim_frame_infos.keySet()) {
+            for (String anim_name : info.anim_frame_infos.keys()) {
                 SpriteInfo.AnimFrameInfo[] anim_frame_info = info.anim_frame_infos.get(anim_name);
 
                 // build frames for animation

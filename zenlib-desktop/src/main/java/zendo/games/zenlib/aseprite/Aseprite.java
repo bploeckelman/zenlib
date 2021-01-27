@@ -257,7 +257,6 @@ public class Aseprite {
 
                 // build frame infos for each frame of this animation
                 info.anim_frame_infos.put(anim_tag.name, new Array<>());
-                info.anim_frame_infos.get(anim_tag.name).ensureCapacity(num_frames);
                 for (int i = 0; i < num_frames; i++) {
                     int frame_index = anim_tag.from + i;
 
@@ -281,7 +280,7 @@ public class Aseprite {
                     anim_frame_info.region_index = i;
                     anim_frame_info.duration = frame_duration;
                     anim_frame_info.hitbox = extract_hitbox_data(aseprite, info, frame);
-                    anim_frame_infos.set(i, anim_frame_info);
+                    anim_frame_infos.add(anim_frame_info);
                 }
             }
 

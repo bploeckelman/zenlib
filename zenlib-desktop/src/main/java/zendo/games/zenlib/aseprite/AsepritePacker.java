@@ -62,7 +62,7 @@ public class AsepritePacker {
             File inputFile = new File(asepriteInputDir);
             spriteOutputDir = new File(inputFile.getParentFile(), inputFile.getName() + "-sprites").getAbsolutePath();
         } else {
-            spriteOutputDir = new File(atlasOutputDir).getAbsolutePath();
+            spriteOutputDir = new File(spriteOutputDir).getAbsolutePath();
         }
 
         System.out.println("Params:"

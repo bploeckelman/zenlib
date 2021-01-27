@@ -19,8 +19,22 @@ public class SpriteInfo {
 
     public static class AnimFrameInfo {
         public String region_name;
-        public RectI hitbox = null;
+        public RectI hitbox;
         public int region_index;
         public float duration;
+
+        public AnimFrameInfo() {
+            region_name = null;
+            hitbox = null;
+            region_index = -1;
+            duration = 0f;
+        }
+    }
+
+    public SpriteInfo() {
+        path = null;
+        name = null;
+        slice_pivot = new Point();
+        anim_frame_infos = new OrderedMap<>();
     }
 }

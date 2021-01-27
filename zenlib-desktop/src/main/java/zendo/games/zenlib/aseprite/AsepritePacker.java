@@ -30,18 +30,20 @@ public class AsepritePacker {
     }
 
     public static void main(String... args) {
-        String input = null;
-        String output = null;
-        String packFileName = "pack.atlas";
+        String asepriteInputDir = null;
+        String atlasOutputDir   = null;
+        String spriteOutputDir  = null;
+        String atlasFileName    = "sprites.atlas";
 
         // parse out pack params from args
         switch (args.length) {
-            case 3: packFileName = args[2];
-            case 2: output       = args[1];
-            case 1: input        = args[0];
+            case 4: atlasFileName    = args[3];
+            case 3: atlasOutputDir   = args[2];
+            case 2: spriteOutputDir  = args[1];
+            case 1: asepriteInputDir = args[0];
             break;
             default: {
-                System.out.println(tag + " Usage: inputDir [outputDir] [packFileName]");
+                System.out.println(tag + " Usage: inputDir [spriteOutputDir] [packOutputDir] [packFileName]");
                 System.exit(0);
             }
         }
@@ -49,24 +51,36 @@ public class AsepritePacker {
         // convert output dir to absolute path
         // TODO: since we're using Gdx.files, this probably isn't necessary
         //  unless we want to allow output to any arbitrary dir outside the project
-        if (output == null) {
-            File inputFile = new File(input);
-            output = new File(inputFile.getParentFile(), inputFile.getName() + "-packed").getAbsolutePath();
+        if (atlasOutputDir == null) {
+            File inputFile = new File(asepriteInputDir);
+            atlasOutputDir = new File(inputFile.getParentFile(), inputFile.getName() + "-packed").getAbsolutePath();
         } else {
-            output = new File(output).getAbsolutePath();
+            atlasOutputDir = new File(atlasOutputDir).getAbsolutePath();
         }
 
-        System.out.println("Params:\n\tinputDir = " + input + "\n\toutputDir = " + output + "\n\tpackFileName = " + packFileName);
+        if (spriteOutputDir == null) {
+            File inputFile = new File(asepriteInputDir);
+            spriteOutputDir = new File(inputFile.getParentFile(), inputFile.getName() + "-sprites").getAbsolutePath();
+        } else {
+            spriteOutputDir = new File(atlasOutputDir).getAbsolutePath();
+        }
+
+        System.out.println("Params:"
+                + "\n\tinputDir = " + asepriteInputDir
+                + "\n\tspriteOutputDir = " + spriteOutputDir
+                + "\n\tatlasOutputDir = " + atlasOutputDir
+                + "\n\tatlasFileName = " + atlasFileName
+        );
 
         try {
             AsepritePacker packer = new AsepritePacker();
-            packer.process(input, output, packFileName);
+            packer.process(asepriteInputDir, spriteOutputDir, atlasOutputDir, atlasFileName);
         } catch (IOException e) {
             System.err.println(tag + ": Failed to pack atlas from aseprite files\n" + e.getMessage());
         }
     }
 
-    private void process(String inputDir, String output, String packFileName) throws IOException {
+    private void process(String inputDir, String spriteOutputDir, String atlasOutputDir, String atlasFileName) throws IOException {
         // configure a pixmap packer
         // TODO: maybe optionally pass some of these as args?
         int pageWidth = 1024;
@@ -87,11 +101,11 @@ public class AsepritePacker {
         for (FileHandle aseFile : Gdx.files.internal(inputDir).list(".ase")) {
             SpriteInfo spriteInfo = Aseprite.loadAndPack(packer, inputDir + aseFile.name());
             json.toJson(spriteInfo, SpriteInfo.class,
-                    Gdx.files.getFileHandle(output + "/" + spriteInfo.name + ".json", Files.FileType.Absolute));
+                    Gdx.files.getFileHandle(spriteOutputDir + "/" + spriteInfo.name + ".json", Files.FileType.Absolute));
         }
 
         // write out texture atlas files to system
-        FileHandle outFileHandle = Gdx.files.getFileHandle(output + "/" + packFileName, Files.FileType.Absolute);
+        FileHandle outFileHandle = Gdx.files.getFileHandle(atlasOutputDir + "/" + atlasFileName, Files.FileType.Absolute);
         PixmapPackerIO packerIO = new PixmapPackerIO();
         PixmapPackerIO.SaveParameters saveParams = new PixmapPackerIO.SaveParameters();
         saveParams.useIndexes = true; // note - defaults are fine, except we do want to use indexes

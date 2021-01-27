@@ -1,6 +1,6 @@
 package zendo.games.zenlib.assets;
 
-import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.OrderedMap;
 import zendo.games.zenlib.utils.Point;
 import zendo.games.zenlib.utils.RectI;
 
@@ -15,7 +15,7 @@ public class SpriteInfo {
     public String path;
     public String name;
     public Point slice_pivot;
-    public ObjectMap<String, AnimFrameInfo[]> anim_frame_infos;
+    public OrderedMap<String, AnimFrameInfo[]> anim_frame_infos;
 
     public static class AnimFrameInfo {
         public String region_name;

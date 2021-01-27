@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.OrderedMap;
 import zendo.games.zenlib.assets.Sprite;
 import zendo.games.zenlib.assets.SpriteInfo;
 import zendo.games.zenlib.utils.Point;
@@ -245,7 +246,7 @@ public class Aseprite {
             info.path = path;
             info.name = path.subSequence(path.lastIndexOf('/') + 1, path.indexOf(".ase")).toString();
             info.slice_pivot = Point.zero();
-            info.anim_frame_infos = new ObjectMap<>();
+            info.anim_frame_infos = new OrderedMap<>();
 
             // set slice pivot point if a slice with a pivot has been defined
             if (aseprite.slices.size() > 0 && aseprite.slices.get(0).has_pivot) {

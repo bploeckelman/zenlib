@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.PixmapPackerIO;
+import com.badlogic.gdx.utils.Json;
+import zendo.games.zenlib.assets.SpriteInfo;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,9 +82,12 @@ public class AsepritePacker {
                 duplicateBorder, stripWhitespaceX, stripWhitespaceY,
                 packStrategy);
 
-        // load aseprite files and pack animation frame pixmaps
+        // load aseprite files, pack animation frame pixmaps into atlas, write out sprite info
+        Json json = new Json();
         for (FileHandle aseFile : Gdx.files.internal(inputDir).list(".ase")) {
-            Aseprite.loadAndPack(packer, inputDir + aseFile.name());
+            SpriteInfo spriteInfo = Aseprite.loadAndPack(packer, inputDir + aseFile.name());
+            json.toJson(spriteInfo, SpriteInfo.class,
+                    Gdx.files.getFileHandle(output + "/" + spriteInfo.name + ".json", Files.FileType.Absolute));
         }
 
         // write out texture atlas files to system

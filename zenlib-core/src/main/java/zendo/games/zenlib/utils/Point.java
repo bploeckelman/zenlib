@@ -5,7 +5,8 @@ public class Point {
     public int x;
     public int y;
 
-    private Point() {
+    // must be public for Json deserialization
+    public Point() {
         this(0, 0);
     }
 

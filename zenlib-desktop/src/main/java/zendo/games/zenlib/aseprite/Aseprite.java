@@ -5,12 +5,9 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.OrderedMap;
-import zendo.games.zenlib.assets.Sprite;
 import zendo.games.zenlib.assets.SpriteInfo;
 import zendo.games.zenlib.utils.Point;
 import zendo.games.zenlib.utils.RectI;
@@ -18,7 +15,6 @@ import zendo.games.zenlib.utils.RectI;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
@@ -260,7 +256,8 @@ public class Aseprite {
                 int num_frames = anim_tag.to - anim_tag.from + 1;
 
                 // build frame infos for each frame of this animation
-                info.anim_frame_infos.put(anim_tag.name, new SpriteInfo.AnimFrameInfo[num_frames]);
+                info.anim_frame_infos.put(anim_tag.name, new Array<>());
+                info.anim_frame_infos.get(anim_tag.name).ensureCapacity(num_frames);
                 for (int i = 0; i < num_frames; i++) {
                     int frame_index = anim_tag.from + i;
 
@@ -278,12 +275,13 @@ public class Aseprite {
                     packer.pack(frame_region_name_w_index, frame.image);
 
                     // save the info needed to build the sprite's animation for this tag/frame
-                    SpriteInfo.AnimFrameInfo[] anim_frame_infos = info.anim_frame_infos.get(anim_tag.name);
-                    anim_frame_infos[i] = new SpriteInfo.AnimFrameInfo();
-                    anim_frame_infos[i].region_name = frame_region_name;
-                    anim_frame_infos[i].region_index = i;
-                    anim_frame_infos[i].duration = frame_duration;
-                    anim_frame_infos[i].hitbox = extract_hitbox_data(aseprite, info, frame);
+                    Array<SpriteInfo.AnimFrameInfo> anim_frame_infos = info.anim_frame_infos.get(anim_tag.name);
+                    SpriteInfo.AnimFrameInfo anim_frame_info = new SpriteInfo.AnimFrameInfo();
+                    anim_frame_info.region_name = frame_region_name;
+                    anim_frame_info.region_index = i;
+                    anim_frame_info.duration = frame_duration;
+                    anim_frame_info.hitbox = extract_hitbox_data(aseprite, info, frame);
+                    anim_frame_infos.set(i, anim_frame_info);
                 }
             }
 

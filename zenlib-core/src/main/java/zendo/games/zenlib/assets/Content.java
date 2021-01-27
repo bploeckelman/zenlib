@@ -53,14 +53,14 @@ public abstract class Content {
 
             // build sprite animations
             for (String anim_name : info.anim_frame_infos.keys()) {
-                SpriteInfo.AnimFrameInfo[] anim_frame_info = info.anim_frame_infos.get(anim_name);
+                Array<SpriteInfo.AnimFrameInfo> anim_frame_info = info.anim_frame_infos.get(anim_name);
 
                 // build frames for animation
-                Sprite.Frame[] anim_frames = new Sprite.Frame[anim_frame_info.length];
-                for (int i = 0; i < anim_frame_info.length; i++) {
-                    SpriteInfo.AnimFrameInfo frame_info = anim_frame_info[i];
+                Sprite.Frame[] anim_frames = new Sprite.Frame[anim_frame_info.size];
+                for (int i = 0; i < anim_frame_info.size; i++) {
+                    SpriteInfo.AnimFrameInfo frame_info = anim_frame_info.get(i);
                     TextureRegion frame_region = atlas.findRegion(frame_info.region_name, frame_info.region_index);
-                    float frame_duration = anim_frame_info[i].duration;
+                    float frame_duration = frame_info.duration;
                     anim_frames[i] = new Sprite.Frame(frame_region, frame_duration / 1000f);
 
                     if (frame_info.hitbox != null) {

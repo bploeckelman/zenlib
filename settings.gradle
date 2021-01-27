@@ -1,0 +1,4 @@
+rootProject.name = 'zenlib'
+include 'zenlib-core'
+include 'zenlib-desktop'
+

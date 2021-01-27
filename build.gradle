@@ -2,6 +2,8 @@ plugins {
     id 'java-library'
 }
 
+sourceCompatibility = 8.0
+
 group 'zendo.games'
 version '0.1.0-SNAPSHOT'
 

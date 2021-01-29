@@ -21,6 +21,7 @@ public class Collider extends Component {
     }
 
     public int mask = 0;
+    public Point origin = Point.zero();
 
     private Shape shape = Shape.none;
     private RectI rect;
@@ -37,6 +38,7 @@ public class Collider extends Component {
         if (other instanceof Collider) {
             Collider collider = (Collider) other;
             this.mask = collider.mask;
+            this.origin = collider.origin;
             this.shape = collider.shape;
             this.rect = collider.rect;
             this.grid = collider.grid;
@@ -160,8 +162,8 @@ public class Collider extends Component {
         {
             shapes.setColor(color);
             if (shape == Shape.rect) {
-                float x1 = rect.x + entity().position.x;
-                float y1 = rect.y + entity().position.y;
+                float x1 = origin.x + rect.x + entity().position.x;
+                float y1 = origin.x + rect.y + entity().position.y;
                 shapes.rect(x1, y1, rect.w, rect.h);
             }
             else if (shape == Shape.grid) {
@@ -173,8 +175,8 @@ public class Collider extends Component {
                                 x * grid.tileSize + entity().position.x,
                                 y * grid.tileSize + entity().position.y,
                                 grid.tileSize, grid.tileSize);
-                        float x1 = rect.x + entity().position.x;
-                        float y1 = rect.y + entity().position.y;
+                        float x1 = origin.x + rect.x + entity().position.x;
+                        float y1 = origin.x + rect.y + entity().position.y;
                         shapes.rect(x1, y1, rect.w, rect.h);
                     }
                 }
@@ -186,14 +188,14 @@ public class Collider extends Component {
 
     private static boolean rectToRect(Collider a, Collider b, Point offset) {
         RectI ar = new RectI();
-        ar.x = a.rect.x + a.entity().position.x + offset.x;
-        ar.y = a.rect.y + a.entity().position.y + offset.y;
+        ar.x = a.origin.x + a.rect.x + a.entity().position.x + offset.x;
+        ar.y = a.origin.y + a.rect.y + a.entity().position.y + offset.y;
         ar.w = a.rect.w;
         ar.h = a.rect.h;
 
         RectI br = new RectI();
-        br.x = b.rect.x + b.entity().position.x + offset.x;
-        br.y = b.rect.y + b.entity().position.y + offset.y;
+        br.x = b.origin.x + b.rect.x + b.entity().position.x + offset.x;
+        br.y = b.origin.y + b.rect.y + b.entity().position.y + offset.y;
         br.w = b.rect.w;
         br.h = b.rect.h;
 
@@ -203,8 +205,8 @@ public class Collider extends Component {
     private static boolean rectToGrid(Collider a, Collider b, Point offset) {
         // get a relative rectangle to the grid
         RectI rect = new RectI();
-        rect.x = a.rect.x + a.entity().position.x + offset.x - b.entity().position.x;
-        rect.y = a.rect.y + a.entity().position.y + offset.y - b.entity().position.y;
+        rect.x = a.origin.x + a.rect.x + a.entity().position.x + offset.x - b.entity().position.x;
+        rect.y = a.origin.y + a.rect.y + a.entity().position.y + offset.y - b.entity().position.y;
         rect.w = a.rect.w;
         rect.h = a.rect.h;
 

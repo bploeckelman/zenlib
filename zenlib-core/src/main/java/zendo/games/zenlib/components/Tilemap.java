@@ -3,6 +3,7 @@ package zendo.games.zenlib.components;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import zendo.games.zenlib.ecs.Component;
+import zendo.games.zenlib.utils.Point;
 
 public class Tilemap extends Component {
 
@@ -10,6 +11,8 @@ public class Tilemap extends Component {
     private int columns;
     private int rows;
     private TextureRegion[] grid;
+
+    public Point origin = Point.zero();
 
     public Tilemap() {
         reset();
@@ -34,6 +37,7 @@ public class Tilemap extends Component {
             this.tileSize = tilemap.tileSize;
             this.columns  = tilemap.columns;
             this.rows     = tilemap.rows;
+            this.origin   = tilemap.origin;
         }
     }
 
@@ -43,8 +47,8 @@ public class Tilemap extends Component {
             for (int y = 0; y < rows; y++) {
                 if (grid[x + y * columns] != null) {
                     batch.draw(grid[x + y * columns],
-                            x * tileSize + entity().position.x,
-                            y * tileSize + entity().position.y,
+                            origin.x + x * tileSize + entity().position.x,
+                            origin.y + y * tileSize + entity().position.y,
                             tileSize, tileSize);
                 }
             }

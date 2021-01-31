@@ -14,6 +14,7 @@ public abstract class Component extends ListNode<Component> {
     public int depth;
     public boolean active;
     public boolean visible;
+    public String tag;
 
     public Component() {
         reset();
@@ -26,6 +27,7 @@ public abstract class Component extends ListNode<Component> {
         this.depth = 0;
         this.active = true;
         this.visible = true;
+        this.tag = "";
     }
 
     public <T extends Component> void copyFrom(T other) {
@@ -34,6 +36,7 @@ public abstract class Component extends ListNode<Component> {
         this.depth   = other.depth;
         this.active  = other.active;
         this.visible = other.visible;
+        this.tag     = other.tag;
     }
 
     public Entity entity() {

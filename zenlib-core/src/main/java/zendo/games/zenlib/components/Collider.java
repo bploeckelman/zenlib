@@ -218,10 +218,10 @@ public class Collider extends Component {
 
         // get the cells the rectangle overlaps
         // subtract out the rect collider's origin to put it back in the same space as the grid (0..col*tileSz,0..row*tileSz)
-        int left   = Calc.clampInt((int) Calc.floor  (rect.x        - b.origin.x / (float) b.grid.tileSize), 0, b.grid.columns);
-        int right  = Calc.clampInt((int) Calc.ceiling(rect.right()  - b.origin.x / (float) b.grid.tileSize), 0, b.grid.columns);
-        int top    = Calc.clampInt((int) Calc.floor  (rect.y        - b.origin.y / (float) b.grid.tileSize), 0, b.grid.rows);
-        int bottom = Calc.clampInt((int) Calc.ceiling(rect.bottom() - b.origin.y / (float) b.grid.tileSize), 0, b.grid.rows);
+        int left   = Calc.clampInt((int) Calc.floor  (rect.x        / (float) b.grid.tileSize), 0, b.grid.columns);
+        int right  = Calc.clampInt((int) Calc.ceiling(rect.right()  / (float) b.grid.tileSize), 0, b.grid.columns);
+        int top    = Calc.clampInt((int) Calc.floor  (rect.y        / (float) b.grid.tileSize), 0, b.grid.rows);
+        int bottom = Calc.clampInt((int) Calc.ceiling(rect.bottom() / (float) b.grid.tileSize), 0, b.grid.rows);
 
         // check each cell
         for (int x = left; x < right; x++) {

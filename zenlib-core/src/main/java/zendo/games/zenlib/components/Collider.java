@@ -210,6 +210,12 @@ public class Collider extends Component {
         rect.w = a.rect.w;
         rect.h = a.rect.h;
 
+        // first do a sanity check that the Rect is within the bounds of the Grid
+        RectI gridBounds = RectI.at(b.origin.x, b.origin.y, b.grid.columns * b.grid.tileSize, b.grid.rows * b.grid.tileSize);
+        if (!rect.overlaps(gridBounds)) {
+            return false;
+        }
+
         // get the cells the rectangle overlaps
         int left   = Calc.clampInt((int) Calc.floor  (rect.x        / (float) b.grid.tileSize), 0, b.grid.columns);
         int right  = Calc.clampInt((int) Calc.ceiling(rect.right()  / (float) b.grid.tileSize), 0, b.grid.columns);

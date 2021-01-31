@@ -176,7 +176,7 @@ public class Collider extends Component {
                                 y * grid.tileSize + entity().position.y,
                                 grid.tileSize, grid.tileSize);
                         float x1 = origin.x + rect.x + entity().position.x;
-                        float y1 = origin.x + rect.y + entity().position.y;
+                        float y1 = origin.y + rect.y + entity().position.y;
                         shapes.rect(x1, y1, rect.w, rect.h);
                     }
                 }

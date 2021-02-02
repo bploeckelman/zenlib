@@ -29,6 +29,18 @@ public class Tilemap extends Component {
         this.grid     = new TextureRegion[columns * rows];
     }
 
+    public int getTileSize() {
+        return tileSize;
+    }
+
+    public int getNumRows() {
+        return rows;
+    }
+
+    public int getNumCols() {
+        return columns;
+    }
+
     @Override
     public <T extends Component> void copyFrom(T other) {
         super.copyFrom(other);

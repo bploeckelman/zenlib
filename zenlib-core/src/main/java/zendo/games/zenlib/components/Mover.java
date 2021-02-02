@@ -116,7 +116,17 @@ public class Mover extends Component {
             int sign = Calc.sign(amount);
 
             while (amount != 0) {
-                if (collider.check(Mask.solid, Point.at(0, sign))) {
+                boolean hit_something = collider.check(Mask.solid, Point.at(0, sign));
+
+                // no solid, but moving down, check for jumpthrough
+                // but only if not already overlapping a jumpthrough
+                if (!hit_something && sign > 0) {
+                    hit_something = (collider.check(Mask.jumpthrough, Point.at(0, sign))
+                                 && !collider.check(Mask.jumpthrough, Point.at(0, 0)));
+                }
+
+                // stop movement
+                if (hit_something) {
                     if (onHitY != null) {
                         onHitY.hit(this);
                     } else {
@@ -160,8 +170,10 @@ public class Mover extends Component {
         }
 
         boolean hit_solid = collider.check(Mask.solid, Point.at(0, dist));
+        boolean hit_jumpthrough = (collider.check(Mask.jumpthrough, Point.at(0, dist))
+                               && !collider.check(Mask.jumpthrough, Point.at(0, 0)));
 
-        return hit_solid;
+        return hit_solid || hit_jumpthrough;
     }
 
 }

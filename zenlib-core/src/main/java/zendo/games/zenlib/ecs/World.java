@@ -217,6 +217,7 @@ public class World {
 
         // assemble list
         for (int i = 0; i < Component.Types.count(); i++) {
+            if (componentsAlive[i] == null) continue;
             Component component = componentsAlive[i].first;
             while (component != null) {
                 if (component.visible && component.entity.visible) {

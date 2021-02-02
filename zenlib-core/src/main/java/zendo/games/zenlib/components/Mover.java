@@ -120,7 +120,7 @@ public class Mover extends Component {
 
                 // no solid, but moving down, check for jumpthrough
                 // but only if not already overlapping a jumpthrough
-                if (!hit_something && sign > 0) {
+                if (!hit_something && sign < 0) {
                     hit_something = (collider.check(Mask.jumpthrough, Point.at(0, sign))
                                  && !collider.check(Mask.jumpthrough, Point.at(0, 0)));
                 }

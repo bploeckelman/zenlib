@@ -2,6 +2,14 @@ package zendo.games.zenlib.utils;
 
 public class Point {
 
+    public static Point zero() {
+        return new Point();
+    }
+
+    public static Point at(int x, int y) {
+        return new Point(x, y);
+    }
+
     public int x;
     public int y;
 
@@ -19,12 +27,48 @@ public class Point {
         this.y = y;
     }
 
-    public static Point zero() {
-        return new Point();
+    public boolean is(int x, int y) {
+        return (this.x == x && this.y == y);
     }
 
-    public static Point at(int x, int y) {
-        return new Point(x, y);
+    public boolean is(Point point) {
+        return is(point.x, point.y);
+    }
+
+    public Point add(int x, int y) {
+        this.x += x;
+        this.y += y;
+        return this;
+    }
+
+    public Point add(Point point) {
+        this.x += point.x;
+        this.y += point.y;
+        return this;
+    }
+
+    public Point sub(int x, int y) {
+        this.x -= x;
+        this.y -= y;
+        return this;
+    }
+
+    public Point sub(Point point) {
+        this.x -= point.x;
+        this.y -= point.y;
+        return this;
+    }
+
+    public Point mul(int s) {
+        this.x *= s;
+        this.y *= s;
+        return this;
+    }
+
+    public Point div(int s) {
+        this.x /= s;
+        this.y /= s;
+        return this;
     }
 
 }

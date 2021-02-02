@@ -66,6 +66,9 @@ public class World {
 
     public <T extends Component> T first(Class<T> clazz) {
         int type = Component.Types.id(clazz);
+        if (componentsAlive[type] == null) {
+            return null;
+        }
         // note: can't use Class.cast() in gwt
 //        return clazz.cast(componentsAlive[type].first);
         return (T) (componentsAlive[type].first);
@@ -73,6 +76,9 @@ public class World {
 
     public <T extends Component> T last(Class<T> clazz) {
         int type = Component.Types.id(clazz);
+        if (componentsAlive[type] == null) {
+            return null;
+        }
         // note: can't use Class.cast() in gwt
 //        return clazz.cast(componentsAlive[type].last);
         return (T) (componentsAlive[type].last);

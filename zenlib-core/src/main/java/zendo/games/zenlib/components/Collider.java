@@ -187,17 +187,15 @@ public class Collider extends Component {
     }
 
     private static boolean rectToRect(Collider a, Collider b, Point offset) {
-        RectI ar = new RectI();
-        ar.x = a.origin.x + a.rect.x + a.entity().position.x + offset.x;
-        ar.y = a.origin.y + a.rect.y + a.entity().position.y + offset.y;
-        ar.w = a.rect.w;
-        ar.h = a.rect.h;
+        RectI ar = RectI.at(
+                  a.entity().position.x + a.origin.x + a.rect.x + offset.x
+                , a.entity().position.y + a.origin.y + a.rect.y + offset.y
+                , a.rect.w, a.rect.h);
 
-        RectI br = new RectI();
-        br.x = b.origin.x + b.rect.x + b.entity().position.x + offset.x;
-        br.y = b.origin.y + b.rect.y + b.entity().position.y + offset.y;
-        br.w = b.rect.w;
-        br.h = b.rect.h;
+        RectI br = RectI.at(
+                  b.entity().position.x + b.origin.x + b.rect.x
+                , b.entity().position.y + b.origin.y + b.rect.y
+                , b.rect.w, b.rect.h);
 
         return ar.overlaps(br);
     }

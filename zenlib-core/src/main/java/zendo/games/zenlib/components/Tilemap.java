@@ -76,7 +76,7 @@ public class Tilemap extends Component {
         assert(x >= 0 && y >= 0 && x + w < columns && y + h < rows) : "Tilemap indices out of bounds";
         for (int ix = x; ix < x + w; ix++) {
             for (int iy = y; iy < y + h; iy++) {
-                grid[x + y * columns] = texture;
+                grid[ix + iy * columns] = texture;
             }
         }
     }

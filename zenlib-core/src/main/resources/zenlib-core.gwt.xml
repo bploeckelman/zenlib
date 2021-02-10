@@ -7,5 +7,6 @@
     <extend-configuration-property name="gdx.reflect.include" value="zendo.games.zenlib.utils.Point" />
     <extend-configuration-property name="gdx.reflect.include" value="zendo.games.zenlib.utils.RectI" />
 
+    <extend-configuration-property name="gdx.reflect.include" value="zendo.games.zenlib.utils.accessors" />
     <extend-configuration-property name="gdx.reflect.include" value="zendo.games.zenlib.components" />
 </module>

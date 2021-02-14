@@ -50,6 +50,7 @@ public class Tilemap extends Component {
             this.columns  = tilemap.columns;
             this.rows     = tilemap.rows;
             this.origin   = tilemap.origin;
+            this.grid     = tilemap.grid;
         }
     }
 

@@ -10,7 +10,7 @@ public class Tilemap extends Component {
     private int tileSize;
     private int columns;
     private int rows;
-    private TextureRegion[] grid;
+    protected TextureRegion[] grid;
 
     public Point origin = Point.zero();
 

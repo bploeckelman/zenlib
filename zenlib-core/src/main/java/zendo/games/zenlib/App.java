@@ -1,6 +1,9 @@
 package zendo.games.zenlib;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.controllers.Controllers;
+import zendo.games.zenlib.input.Input;
 import zendo.games.zenlib.utils.Time;
 
 public class App extends ApplicationAdapter {
@@ -9,18 +12,24 @@ public class App extends ApplicationAdapter {
     static final int max_updates = 5;
 
     public final Game game;
+    public final Input input;
 
     long time_last;
     long time_accum;
 
     public App(Game game) {
         this.game = game;
+        this.input = new Input();
     }
 
     @Override
     public void create() {
         Time.init();
+        Input.init();
         game.init();
+
+        Gdx.input.setInputProcessor(input);
+        Controllers.addListener(input);
     }
 
     @Override
@@ -55,6 +64,9 @@ public class App extends ApplicationAdapter {
         if (time_accum > time_max) {
             time_accum = time_max;
         }
+
+        // input update
+        Input.frame();
 
         // do as many updates as possible
         while (time_accum >= time_target) {

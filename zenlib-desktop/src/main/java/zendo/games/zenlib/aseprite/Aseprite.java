@@ -333,7 +333,7 @@ public class Aseprite {
             // flip slice pivot point to be y-up to match in-game reference with aseprite pivot point
             slice_h = slice.height;
             pivot_x = slice.pivot.x;
-            pivot_y = slice.pivot.y - slice_h;
+            pivot_y = slice_h - slice.pivot.y;
         }
 
         // note:

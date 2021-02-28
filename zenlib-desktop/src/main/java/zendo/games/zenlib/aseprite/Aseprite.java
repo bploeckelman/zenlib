@@ -247,8 +247,8 @@ public class Aseprite {
             // set slice pivot point if a slice with a pivot has been defined
             if (aseprite.slices.size() > 0 && aseprite.slices.get(0).has_pivot) {
                 Slice slice = aseprite.slices.get(0);
-                // flip slice pivot point to be y-up to match in-game reference with aseprite pivot point
-                info.slice_pivot.set(slice.pivot.x, slice.pivot.y - slice.height);
+                // the slice pivot should be y-up at this point to match in-game sprite origin with aseprite y-down pivot position
+                info.slice_pivot.set(slice.pivot.x, slice.pivot.y);
             }
 
             // build animation info for each tag

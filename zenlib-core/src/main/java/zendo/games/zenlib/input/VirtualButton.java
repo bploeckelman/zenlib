@@ -54,6 +54,26 @@ public class VirtualButton {
 
     // ----------------------------------------------------
 
+    private static class MouseButtonNode {
+        Input.MouseButton button = Input.MouseButton.none;
+
+        boolean pressed = false;
+        boolean down = false;
+        boolean released = false;
+
+        void init(Input.MouseButton button) {
+            this.button = button;
+        }
+
+        void update() {
+            pressed  = Input.pressed(button);
+            down     = Input.down(button);
+            released = Input.released(button);
+        }
+    }
+
+    // ----------------------------------------------------
+
     private static class AxisNode {
         int gamepadId = 0;
 
@@ -94,10 +114,12 @@ public class VirtualButton {
 
     KeyNode[] keys = new KeyNode[max_virtual_nodes];
     ButtonNode[] buttons = new ButtonNode[max_virtual_nodes];
+    MouseButtonNode[] mouseButtons = new MouseButtonNode[max_virtual_nodes];
     AxisNode[] axes = new AxisNode[max_virtual_nodes];
 
     int keysLen = 0;
     int buttonsLen = 0;
+    int mouseButtonsLen = 0;
     int axesLen = 0;
 
     float pressBuffer = 0;
@@ -119,6 +141,7 @@ public class VirtualButton {
         for (int i = 0; i < max_virtual_nodes; i++) {
             keys[i] = new KeyNode();
             buttons[i] = new ButtonNode();
+            mouseButtons[i] = new MouseButtonNode();
             axes[i] = new AxisNode();
         }
     }
@@ -139,6 +162,16 @@ public class VirtualButton {
         } else {
             buttons[buttonsLen].init(gamepadId, button);
             buttonsLen++;
+        }
+        return this;
+    }
+
+    public VirtualButton addMouseButton(Input.MouseButton button) {
+        if (mouseButtonsLen >= max_virtual_nodes) {
+            Gdx.app.log(tag, "VirtualButton no more mouse buttons available");
+        } else {
+            mouseButtons[mouseButtonsLen].init(button);
+            mouseButtonsLen++;
         }
         return this;
     }
@@ -192,6 +225,15 @@ public class VirtualButton {
             pressed  = pressed  || buttons[i].pressed;
             down     = down     || buttons[i].down;
             released = released || buttons[i].released;
+        }
+
+        // mouse buttons
+        for (int i = 0; i < mouseButtonsLen; i++) {
+            mouseButtons[i].update();
+
+            pressed  = pressed  || mouseButtons[i].pressed;
+            down     = down     || mouseButtons[i].down;
+            released = released || mouseButtons[i].released;
         }
 
         // axes

@@ -27,6 +27,7 @@ public class Animator extends Component {
     public Animator(String spriteName) {
         reset();
         sprite = Content.findSprite(spriteName);
+        tint = new Color(1f, 1f, 1f, 1f);
     }
 
     @Override

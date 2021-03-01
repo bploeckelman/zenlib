@@ -735,6 +735,9 @@ public class Aseprite {
                     slice.has_pivot = true;
                     slice.pivot.x = stream.getInt();
                     slice.pivot.y = stream.getInt();
+                    // pivot points are defined in a y-down coordinate system
+                    // convert them to y-up here so that they match object coords in game
+                    slice.pivot.y = slice.height - slice.pivot.y;
                 }
 
                 slice.userdata = new UserData();

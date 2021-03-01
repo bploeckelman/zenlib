@@ -1,5 +1,6 @@
 package zendo.games.zenlib.components;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import zendo.games.zenlib.assets.Content;
@@ -13,6 +14,7 @@ public class Animator extends Component {
     public float rotation;
     public float speed;
 
+    private Color tint;
     private Sprite sprite;
     private int animationIndex;
     private int frameIndex;
@@ -36,6 +38,7 @@ public class Animator extends Component {
         scale.set(1, 1);
         rotation = 0;
         speed = 1;
+        tint = null;
         sprite = null;
         animationIndex = 0;
         frameIndex = 0;
@@ -50,6 +53,7 @@ public class Animator extends Component {
             this.scale.set(animator.scale);
             this.rotation       = animator.rotation;
             this.speed          = animator.speed;
+            this.tint           = animator.tint;
             this.sprite         = animator.sprite;
             this.animationIndex = animator.animationIndex;
             this.frameIndex     = animator.frameIndex;
@@ -71,6 +75,22 @@ public class Animator extends Component {
     public Sprite.Frame frame() {
         Sprite.Anim anim = animation();
         return anim.frames.get(frameIndex);
+    }
+
+    public Color tint() {
+        return tint;
+    }
+
+    public void setAlpha(float a) {
+        tint.a = a;
+    }
+
+    public void setRGB(float r, float g, float b) {
+        tint.set(r, g, b, tint.a);
+    }
+
+    public void setColor(float r, float g, float b, float a) {
+        tint.set(r, g, b, a);
     }
 
     public void play(String animation) {
@@ -132,6 +152,7 @@ public class Animator extends Component {
         Sprite.Anim anim = sprite.animations.get(animationIndex);
         Sprite.Frame frame = anim.frames.get(frameIndex);
 
+        batch.setColor(tint);
         batch.draw(frame.image,
                 entity().position.x - sprite.origin.x,
                 entity().position.y - sprite.origin.y,
@@ -142,6 +163,7 @@ public class Animator extends Component {
                 scale.x, scale.y,
                 rotation
         );
+        batch.setColor(1f, 1f, 1f, 1f);
     }
 
     private boolean inValidState() {

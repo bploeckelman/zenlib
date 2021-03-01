@@ -65,9 +65,6 @@ public class App extends ApplicationAdapter {
             time_accum = time_max;
         }
 
-        // input update
-        Input.frame();
-
         // do as many updates as possible
         while (time_accum >= time_target) {
             time_accum -= time_target;
@@ -87,6 +84,7 @@ public class App extends ApplicationAdapter {
             Time.previous_elapsed = Time.elapsed_millis();
 //            Time.elapsed += Time.delta;  // do we need this if elapsed_millis() is using the system time since start?
 
+            Input.frame();
             game.update(Time.delta);
         }
 

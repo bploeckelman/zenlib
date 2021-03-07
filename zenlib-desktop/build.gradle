@@ -17,7 +17,7 @@ dependencies {
     api project(":zenlib-core")
     implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
     implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-    implementation "org.mockito:mockito-all:2.13.0"
+    implementation "org.mockito:mockito-all:1.9.5"
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'

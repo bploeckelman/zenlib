@@ -30,6 +30,13 @@ public class Animator extends Component {
         tint = new Color(1f, 1f, 1f, 1f);
     }
 
+    public Animator(String spriteName, String animationName) {
+        reset();
+        sprite = Content.findSprite(spriteName);
+        tint = new Color(1f, 1f, 1f, 1f);
+        play(animationName);
+    }
+
     @Override
     public void reset() {
         super.reset();
